@@ -4,7 +4,7 @@ import Login from '../components/login/login';
 const WelcomePage = () => {
   return (
   <>
-    <Login />
+    <Login/>
   </>
   );
 };
