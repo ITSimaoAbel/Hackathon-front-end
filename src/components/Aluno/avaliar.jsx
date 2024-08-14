@@ -74,7 +74,7 @@ export  const LancamentoNotas = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-4xl mx-auto p-6 bg-blue-400 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6">Lançamento de Notas</h1>
       <div className="space-y-4 mb-6">
         <div>
@@ -83,7 +83,7 @@ export  const LancamentoNotas = () => {
             id="turma"
             value={turmaSelecionada}
             onChange={handleTurmaChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione a Turma</option>
             {turmas.map((turma, idx) => (
@@ -98,7 +98,7 @@ export  const LancamentoNotas = () => {
             id="materia"
             value={materiaSelecionada}
             onChange={handleMateriaChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione a Matéria</option>
             {materias.map((materia, idx) => (
