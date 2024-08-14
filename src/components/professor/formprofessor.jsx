@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CriarProfessor = () => {
+export const CriarProfessor = () => {
   const [formData, setFormData] = useState({
     nome: '',
     sexo: '',

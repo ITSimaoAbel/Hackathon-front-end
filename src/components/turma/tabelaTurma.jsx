@@ -2,9 +2,10 @@ import React from 'react'
 
 
 
-export const MostrarAluno = () => {
+export const TabelaTurma = () => {
   return (
     <>
+      <h1>Turmas</h1>
     </>
   )
 }

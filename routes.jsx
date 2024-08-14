@@ -4,8 +4,10 @@ import { Avaliacao } from "./src/pages/avaliacao";
 import { Aluno } from "./src/components/Aluno/Formaluno";
 import { Notas } from "./src/pages/notas";
 import { ErrorPage } from "./src/pages/error";
-import CriarProfessor from "./src/components/professor/formprofessor";
+import {CriarProfessor} from "./src/components/professor/formprofessor";
 import { CriarTurma } from "./src/components/turma/formTurma";
+import { MostrarTurma } from "./src/pages/mostrarTurma";
+import { MostrarAluno } from "./src/pages/mostrarAluno";
 
 
 export const route = createBrowserRouter([
@@ -33,6 +35,14 @@ export const route = createBrowserRouter([
     {
         path:'/turma',
         element: <CriarTurma/>,
+    },
+    {
+        path:'/mostrarAluno',
+        element: <MostrarAluno/>,
+    },
+    {
+        path:'/mostrarTurma',
+        element: <MostrarTurma/>,
     },
     
 ])

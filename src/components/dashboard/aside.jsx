@@ -14,17 +14,17 @@ export const Aside = () => {
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/#" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Home
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/mostrarAlunos" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Alunos
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/Avaliacao" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/mostrarTurmas" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Turma
               </Link>
             </li>
