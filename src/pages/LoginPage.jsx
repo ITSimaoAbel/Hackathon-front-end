@@ -32,12 +32,12 @@ const LoginPage = () => {
               className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-          <div>
+          <div className="space-y-4">
             <button
               type="submit"
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-[#37221] border border-transparent rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 text-sm font-medium text-[#37221] bg-white border-2 border-[#37221] rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-[#f05f24] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f05f24]"
             >
-              Sign in
+              Submeter
             </button>
           </div>
         </form>
@@ -47,3 +47,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
