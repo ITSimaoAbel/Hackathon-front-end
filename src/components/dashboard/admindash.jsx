@@ -5,13 +5,13 @@ import { Aside } from './aside';
 export const Dashboard = () => {
   return (
     <>
-    <Aside />
-    <Header />
+      <Aside />
+      <div className="ml-64">
+        <Header />
+      </div>
     </>
-     
   );
 };
-
 
 
  
