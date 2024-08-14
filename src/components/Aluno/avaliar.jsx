@@ -14,15 +14,12 @@ const alunosData = [
 ];
 
 export  const LancamentoNotas = () => {
-  // Estado para selecionar turma, matéria e avaliação
   const [turmaSelecionada, setTurmaSelecionada] = useState('');
   const [materiaSelecionada, setMateriaSelecionada] = useState('');
   const [avaliacaoSelecionada, setAvaliacaoSelecionada] = useState('');
 
-  // Estado para armazenar os alunos filtrados
   const [alunos, setAlunos] = useState([]);
 
-  // Filtra alunos com base na turma, matéria e avaliação selecionadas
   useEffect(() => {
     if (turmaSelecionada && materiaSelecionada && avaliacaoSelecionada) {
       const alunosFiltrados = alunosData.filter(aluno =>
@@ -36,22 +33,19 @@ export  const LancamentoNotas = () => {
     }
   }, [turmaSelecionada, materiaSelecionada, avaliacaoSelecionada]);
 
-  // Atualiza o estado da turma selecionada
   const handleTurmaChange = (e) => {
     setTurmaSelecionada(e.target.value);
   };
 
-  // Atualiza o estado da matéria selecionada
   const handleMateriaChange = (e) => {
     setMateriaSelecionada(e.target.value);
   };
 
-  // Atualiza o estado da avaliação selecionada
+
   const handleAvaliacaoChange = (e) => {
     setAvaliacaoSelecionada(parseInt(e.target.value, 10));
   };
 
-  // Atualiza o estado da nota de um aluno
   const handleNotaChange = (index, e) => {
     const { value } = e.target;
     const novosAlunos = [...alunos];
@@ -59,7 +53,7 @@ export  const LancamentoNotas = () => {
     setAlunos(novosAlunos);
   };
 
-  // Envia os dados do formulário
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Dados das notas enviados:', alunos);
