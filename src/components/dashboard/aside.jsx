@@ -19,12 +19,12 @@ export const Aside = () => {
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/mostrarAlunos" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/MostrarAlunos" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Alunos
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/mostrarTurmas" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/MostrarTurmas" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Turma
               </Link>
             </li>
