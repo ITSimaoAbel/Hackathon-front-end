@@ -19,13 +19,13 @@ export const Aside = () => {
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/MostrarAlunos" className="block py-2 px-4 rounded hover:bg-gray-700">
+              <Link to="/mostrar-aluno" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Alunos
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="/MostrarTurmas" className="block py-2 px-4 rounded hover:bg-gray-700">
-                Turma
+              <Link to="/mostrar-turma" className="block py-2 px-4 rounded hover:bg-gray-700">
+                Turmas
               </Link>
             </li>
             <li className="mb-4">
@@ -36,6 +36,16 @@ export const Aside = () => {
             <li className="mb-4">
               <Link to="/Notas" className="block py-2 px-4 rounded hover:bg-gray-700">
                 Lançar Notas
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link to="/#" className="block py-2 px-4 rounded hover:bg-gray-700">
+                Disciplinas
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link to="/#" className="block py-2 px-4 rounded hover:bg-gray-700">
+                Classes
               </Link>
             </li>
             <li className="mb-4">

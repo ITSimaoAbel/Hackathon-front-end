@@ -6,8 +6,10 @@ import { Notas } from "./src/pages/notas";
 import { ErrorPage } from "./src/pages/error";
 import {CriarProfessor} from "./src/components/professor/formprofessor";
 import { CriarTurma } from "./src/components/turma/formTurma";
-import { MostrarTurma } from "./src/pages/mostrarTurma";
-import { MostrarAluno } from "./src/pages/mostrarAluno";
+import { MostrarTurma } from "./src/pages/mostrar-turma";
+import { MostrarAluno } from "./src/pages/mostrar-aluno";
+import { ClassePage } from "./src/pages/classe-page";
+import { DisciplinaPage } from "./src/pages/disciplina-page";
 
 
 export const route = createBrowserRouter([
@@ -37,12 +39,20 @@ export const route = createBrowserRouter([
         element: <CriarTurma/>,
     },
     {
-        path:'/mostrarAluno',
+        path:'/mostrar-aluno',
         element: <MostrarAluno/>,
     },
     {
-        path:'/mostrarTurma',
+        path:'/mostrar-turma',
         element: <MostrarTurma/>,
+    },
+    {
+        path:'/classe-page',
+        element: <ClassePage/>,
+    },
+    {
+        path:'/disciplina-page',
+        element: <DisciplinaPage/>,
     },
     
 ])
