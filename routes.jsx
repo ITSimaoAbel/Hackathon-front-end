@@ -11,6 +11,9 @@ import { MostrarAluno } from "./src/pages/mostrar-aluno";
 import { ClassePage } from "./src/pages/classe-page";
 import { DisciplinaPage } from "./src/pages/disciplina-page";
 
+import WelcomePage from "./src/pages/welcomePage";
+
+
 
 export const route = createBrowserRouter([
     {
@@ -34,6 +37,11 @@ export const route = createBrowserRouter([
         path:'/professor',
         element: <CriarProfessor/>,
     },
+    {
+        path:'/welcomePage',
+        element: <WelcomePage/>,
+    },
+
     {
         path:'/turma',
         element: <CriarTurma/>,
