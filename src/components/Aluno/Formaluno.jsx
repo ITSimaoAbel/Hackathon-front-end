@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export const Aluno = () => {
   const [formData, setFormData] = useState({
@@ -18,20 +19,20 @@ export const Aluno = () => {
     // Aqui você pode adicionar a lógica para enviar os dados para o backend.
     console.log('Dados do aluno enviados:', formData);
     // Exemplo de chamada à API
-    // axios.post(`${import.meta.env.VITE_API_BASE_URL}/alunos`, formData)
-    //   .then(response => {
-    //     console.log('Aluno registrado com sucesso:', response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Erro ao registrar aluno:', error);
-    //   });
+     axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/alunos`, formData)
+       .then(response => {
+         console.log('Aluno registrado com sucesso:', response.data);
+       })
+       .catch(error => {
+         console.error('Erro ao registrar aluno:', error);
+       });
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6">Registro de Aluno</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Campo Nome */}
+
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome</label>
           <input
@@ -45,7 +46,6 @@ export const Aluno = () => {
           />
         </div>
 
-        {/* Campo Data de Nascimento */}
         <div>
           <label htmlFor="dataNascimento" className="block text-sm font-medium text-gray-700">Data de Nascimento</label>
           <input
@@ -81,7 +81,7 @@ export const Aluno = () => {
         <div>
           <label htmlFor="idTurma" className="block text-sm font-medium text-gray-700">ID da Turma</label>
           <input
-            type="text"
+            type="number"
             id="idTurma"
             name="idTurma"
             value={formData.idTurma}

@@ -8,6 +8,7 @@
 // }
 
 import React from 'react';
+import {LancamentoNotas} from '../components/Aluno/avaliar';
 
 export const Home = () => {
   return (
@@ -45,6 +46,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
+        <LancamentoNotas/>
       </section>
 
       {/* How It Solves Problems Section */}
