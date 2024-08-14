@@ -1,12 +1,12 @@
 import { Dashboard } from "../components/dashboard/admindash";
-import LoginPage from "./LoginPage";
+import Login from "../components/login/login";
+
 
 export const Home = () => {
     return (
       <>
-         <LoginPage/>
+         <Login/>
         <Dashboard />
       </>
     );
 }
-
