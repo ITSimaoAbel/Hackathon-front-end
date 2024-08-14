@@ -4,6 +4,7 @@ import { Avaliacao } from "./src/pages/avaliacao";
 import { Aluno } from "./src/components/Aluno/Formaluno";
 import { Notas } from "./src/pages/notas";
 import { ErrorPage } from "./src/pages/error";
+import CriarProfessor from "./src/components/professor/formprofessor";
 
 
 export const route = createBrowserRouter([
@@ -23,5 +24,9 @@ export const route = createBrowserRouter([
     {
         path:'/notas',
         element: <Notas/>,
+    },
+    {
+        path:'/professor',
+        element: <CriarProfessor/>,
     },
 ])
