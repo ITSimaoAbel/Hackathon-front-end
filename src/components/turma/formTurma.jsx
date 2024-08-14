@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -11,6 +10,8 @@ export const CriarTurma = () => {
   });
 
   const [professores, setProfessores] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,10 +22,7 @@ export const CriarTurma = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`, {
-        ...formData,
-        idClasse: Number(formData.idClasse), 
-      });
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`, formData);
       console.log('Turma criada com sucesso:', response.data);
       setFormData({
         numero: '',
@@ -32,16 +30,23 @@ export const CriarTurma = () => {
         idClasse: '',
         idProfessor: '',
       });
+      setError('');
     } catch (error) {
       console.error('Erro ao criar turma:', error.response ? error.response.data : error.message);
+      setError('Erro ao criar turma. Tente novamente.');
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Buscar professores
         const professoresResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/professores`);
         setProfessores(professoresResponse.data);
+
+        // Buscar classes
+        const classesResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/classes`);
+        setClasses(classesResponse.data);
       } catch (error) {
         console.error('Erro ao carregar dados:', error.response ? error.response.data : error.message);
       }
@@ -91,9 +96,9 @@ export const CriarTurma = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione uma Classe</option>
-            {[1, 2, 3, 4, 5, 6].map((classe) => (
-              <option key={classe} value={classe}>
-                 {classe}ª Classe
+            {classes.map((classe) => (
+              <option key={classe._id} value={classe._id}>
+                {classe.nome}ª classe
               </option>
             ))}
           </select>
@@ -118,6 +123,8 @@ export const CriarTurma = () => {
           </select>
         </div>
 
+        {error && <p className="text-red-600">{error}</p>}
+
         <button
           type="submit"
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -128,5 +135,3 @@ export const CriarTurma = () => {
     </div>
   );
 };
-
-
