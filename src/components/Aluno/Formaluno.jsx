@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const Aluno = () => {
@@ -9,24 +9,38 @@ export const Aluno = () => {
     idTurma: ''
   });
 
+  const [turmas, setTurmas] = useState([]);
+
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica para enviar os dados para o backend.
-    console.log('Dados do aluno enviados:', formData);
-    // Exemplo de chamada à API
-     axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/alunos`, formData)
-       .then(response => {
-         console.log('Aluno registrado com sucesso:', response.data);
-       })
-       .catch(error => {
-         console.error('Erro ao registrar aluno:', error);
-       });
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/alunos`, formData);
+      console.log('Aluno registrado com sucesso:', response.data);
+    } catch (error) {
+      console.error('Erro ao registrar aluno:', error.response ? error.response.data : error.message);
+    }
   };
+
+
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`);
+        setTurmas(response.data);
+      } catch (error) {
+        console.error('Erro ao carregar turmas:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchTurmas();
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -59,7 +73,6 @@ export const Aluno = () => {
           />
         </div>
 
-        {/* Campo Sexo */}
         <div>
           <label htmlFor="sexo" className="block text-sm font-medium text-gray-700">Sexo</label>
           <select
@@ -77,21 +90,25 @@ export const Aluno = () => {
           </select>
         </div>
 
-        {/* Campo ID da Turma */}
         <div>
-          <label htmlFor="idTurma" className="block text-sm font-medium text-gray-700">ID da Turma</label>
-          <input
-            type="number"
+          <label htmlFor="idTurma" className="block text-sm font-medium text-gray-700">Turma</label>
+          <select
             id="idTurma"
             name="idTurma"
             value={formData.idTurma}
             onChange={handleChange}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+          >
+            <option value="">Selecione uma Turma</option>
+            {turmas.map((turma) => (
+              <option key={turma._id} value={turma._id}>
+               Turma:{turma.numero} - Sala:{turma.sala} -{turma.Classe}ª Classe
+              </option>
+            ))}
+          </select>
         </div>
 
-        {/* Botão de Envio */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -102,4 +119,3 @@ export const Aluno = () => {
     </div>
   );
 };
-
