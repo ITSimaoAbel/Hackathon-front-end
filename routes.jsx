@@ -6,6 +6,7 @@ import { Notas } from "./src/pages/notas";
 import { ErrorPage } from "./src/pages/error";
 import CriarProfessor from "./src/components/professor/formprofessor";
 import { CriarTurma } from "./src/components/turma/formTurma";
+import WelcomePage from "./src/pages/welcomePage";
 
 
 export const route = createBrowserRouter([
@@ -30,6 +31,11 @@ export const route = createBrowserRouter([
         path:'/professor',
         element: <CriarProfessor/>,
     },
+    {
+        path:'/welcomePage',
+        element: <WelcomePage/>,
+    },
+
     {
         path:'/turma',
         element: <CriarTurma/>,
