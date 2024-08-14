@@ -8,6 +8,7 @@ import {CriarProfessor} from "./src/components/professor/formprofessor";
 import { CriarTurma } from "./src/components/turma/formTurma";
 import { MostrarTurma } from "./src/pages/mostrarTurma";
 import { MostrarAluno } from "./src/pages/mostrarAluno";
+import { ClassePage } from "./src/pages/classe-page";
 
 
 export const route = createBrowserRouter([
@@ -43,6 +44,14 @@ export const route = createBrowserRouter([
     {
         path:'/mostrarTurma',
         element: <MostrarTurma/>,
+    },
+    {
+        path:'/classe-page',
+        element: <ClassePage/>,
+    },
+    {
+        path:'/disciplina-page',
+        element: <DisciplinaPage/>,
     },
     
 ])
