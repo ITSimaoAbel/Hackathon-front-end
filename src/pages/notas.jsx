@@ -8,6 +8,7 @@ export const Notas = () => {
         <Dashboard />
         <LancamentoNotas />
         <Footer/>
+        
       </>
     );
 }
