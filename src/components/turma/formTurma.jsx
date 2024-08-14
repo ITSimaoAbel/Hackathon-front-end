@@ -93,7 +93,7 @@ export const CriarTurma = () => {
             <option value="">Selecione uma Classe</option>
             {[1, 2, 3, 4, 5, 6].map((classe) => (
               <option key={classe} value={classe}>
-                Classe {classe}
+                 {classe}ª Classe
               </option>
             ))}
           </select>
