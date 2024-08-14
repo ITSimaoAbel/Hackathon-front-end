@@ -34,4 +34,5 @@ export const route = createBrowserRouter([
         path:'/turma',
         element: <CriarTurma/>,
     },
+    
 ])

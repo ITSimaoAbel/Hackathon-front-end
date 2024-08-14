@@ -22,13 +22,23 @@ export const Dashboard = () => {
                 </Link>
               </li>
               <li className="mb-4">
+                <Link to="/" className="block py-2 px-4 rounded hover:bg-gray-700">
+                  Alunos
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link to="/Avaliacao" className="block py-2 px-4 rounded hover:bg-gray-700">
+                  Tuma
+                </Link>
+              </li>
+              <li className="mb-4">
                 <Link to="/Avaliacao" className="block py-2 px-4 rounded hover:bg-gray-700">
                   Avaliação
                 </Link>
               </li>
               <li className="mb-4">
-                <Link to="/Notas" className="block py-2 px-4 rounded hover:bg-gray-700">
-                  Notas
+                <Link to="/notas" className="block py-2 px-4 rounded hover:bg-gray-700">
+                lancar Notas
                 </Link>
               </li>
               <li className="mb-4">
@@ -69,3 +79,7 @@ export const Dashboard = () => {
     </div>
   );
 };
+
+
+
+ 
