@@ -12,7 +12,6 @@ export const LancamentoNotas = () => {
   const [avaliacoes, setAvaliacoes] = useState([]);
 
   useEffect(() => {
-    // Buscar turmas da API
     const fetchTurmas = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`);
@@ -22,7 +21,6 @@ export const LancamentoNotas = () => {
       }
     };
 
-    // Buscar matérias da API
     const fetchMaterias = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/materias`);
@@ -32,7 +30,6 @@ export const LancamentoNotas = () => {
       }
     };
 
-    // Buscar avaliações da API
     const fetchAvaliacoes = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/avaliacoes`);
@@ -49,7 +46,6 @@ export const LancamentoNotas = () => {
 
   useEffect(() => {
     if (turmaSelecionada && materiaSelecionada && avaliacaoSelecionada) {
-      // Filtrar alunos baseados na seleção
       const alunosFiltrados = alunosData.filter(aluno =>
         aluno.turma === turmaSelecionada &&
         aluno.materia === materiaSelecionada &&
@@ -108,7 +104,7 @@ export const LancamentoNotas = () => {
             <option value="">Selecione a Turma</option>
             {turmas.map((turma) => (
               <option key={turma._id} value={turma._id}>
-                Turma:{turma.numero} - Sala:{turma.sala} - {turma.Classe}ª Classe 
+                {`Turma: ${turma.numero} - Sala: ${turma.sala} - ${turma.idClasse ? turma.idClasse.nome : 'Desconhecida'}ª Classe`}
               </option>
             ))}
           </select>
