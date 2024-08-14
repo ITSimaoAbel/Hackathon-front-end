@@ -1,27 +1,55 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-// Dados de exemplo para turmas, matérias, avaliações e alunos
-const turmas = ['Turma A', 'Turma B', 'Turma C'];
-const materias = ['Matemática', 'Português', 'História'];
-const avaliacoes = [1, 2, 3]; // Números de avaliações disponíveis
-
-const alunosData = [
-  { nome: 'João', materia: 'Matemática', turma: 'Turma A', avaliacao: 1, nota: '' },
-  { nome: 'Maria', materia: 'Português', turma: 'Turma B', avaliacao: 2, nota: '' },
-  { nome: 'Pedro', materia: 'História', turma: 'Turma C', avaliacao: 3, nota: '' },
-  { nome: 'Ana', materia: 'Matemática', turma: 'Turma A', avaliacao: 1, nota: '' },
-  { nome: 'Lucas', materia: 'Matemática', turma: 'Turma B', avaliacao: 2, nota: '' },
-];
-
-export  const LancamentoNotas = () => {
+export const LancamentoNotas = () => {
   const [turmaSelecionada, setTurmaSelecionada] = useState('');
   const [materiaSelecionada, setMateriaSelecionada] = useState('');
   const [avaliacaoSelecionada, setAvaliacaoSelecionada] = useState('');
 
   const [alunos, setAlunos] = useState([]);
+  const [turmas, setTurmas] = useState([]);
+  const [materias, setMaterias] = useState([]);
+  const [avaliacoes, setAvaliacoes] = useState([]);
+
+  useEffect(() => {
+    // Buscar turmas da API
+    const fetchTurmas = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`);
+        setTurmas(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar turmas:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    // Buscar matérias da API
+    const fetchMaterias = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/materias`);
+        setMaterias(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar matérias:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    // Buscar avaliações da API
+    const fetchAvaliacoes = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/avaliacoes`);
+        setAvaliacoes(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar avaliações:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchTurmas();
+    fetchMaterias();
+    fetchAvaliacoes();
+  }, []);
 
   useEffect(() => {
     if (turmaSelecionada && materiaSelecionada && avaliacaoSelecionada) {
+      // Filtrar alunos baseados na seleção
       const alunosFiltrados = alunosData.filter(aluno =>
         aluno.turma === turmaSelecionada &&
         aluno.materia === materiaSelecionada &&
@@ -41,7 +69,6 @@ export  const LancamentoNotas = () => {
     setMateriaSelecionada(e.target.value);
   };
 
-
   const handleAvaliacaoChange = (e) => {
     setAvaliacaoSelecionada(parseInt(e.target.value, 10));
   };
@@ -53,11 +80,10 @@ export  const LancamentoNotas = () => {
     setAlunos(novosAlunos);
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Dados das notas enviados:', alunos);
-    // Exemplo de chamada à API
+    // Exemplo de chamada à API para enviar os dados
     // axios.post(`${import.meta.env.VITE_API_BASE_URL}/notas`, alunos)
     //   .then(response => {
     //     console.log('Notas lançadas com sucesso:', response.data);
@@ -80,8 +106,10 @@ export  const LancamentoNotas = () => {
             className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione a Turma</option>
-            {turmas.map((turma, idx) => (
-              <option key={idx} value={turma}>{turma}</option>
+            {turmas.map((turma) => (
+              <option key={turma._id} value={turma._id}>
+                Turma:{turma.numero} - Sala:{turma.sala} - {turma.Classe}ª Classe 
+              </option>
             ))}
           </select>
         </div>
@@ -95,8 +123,10 @@ export  const LancamentoNotas = () => {
             className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione a Matéria</option>
-            {materias.map((materia, idx) => (
-              <option key={idx} value={materia}>{materia}</option>
+            {materias.map((materia) => (
+              <option key={materia._id} value={materia._id}>
+                {materia.nome}
+              </option>
             ))}
           </select>
         </div>
@@ -110,8 +140,10 @@ export  const LancamentoNotas = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Selecione a Avaliação</option>
-            {avaliacoes.map((avaliacao, idx) => (
-              <option key={idx} value={avaliacao}>{avaliacao}</option>
+            {avaliacoes.map((avaliacao) => (
+              <option key={avaliacao._id} value={avaliacao._id}>
+                {avaliacao.numero}
+              </option>
             ))}
           </select>
         </div>
@@ -163,5 +195,3 @@ export  const LancamentoNotas = () => {
     </div>
   );
 };
-
-
