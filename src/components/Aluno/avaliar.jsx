@@ -26,7 +26,7 @@ export const LancamentoNotas = () => {
 
     const fetchMaterias = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/materias`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`);
         setMaterias(response.data);
       } catch (error) {
         console.error('Erro ao buscar matérias:', error.response ? error.response.data : error.message);
@@ -59,23 +59,31 @@ export const LancamentoNotas = () => {
 
   useEffect(() => {
     if (turmaSelecionada) {
-      const fetchDisciplinasPorClasse = async () => {
-        try {
-          console.log('Buscando disciplinas para a turma:', turmaSelecionada); // Adiciona um log para depuração
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/classe/${turmaSelecionada}/disciplinas`);
-          console.log('Disciplinas retornadas:', response.data); // Adiciona um log para depuração
-          setDisciplinasPorClasse(response.data);
-        } catch (error) {
-          console.error('Erro ao buscar disciplinas por classe:', error.response ? error.response.data : error.message);
-        }
-      };
-  
-      fetchDisciplinasPorClasse();
+     
+      const turmaSelecionadaInfo = turmas.find(turma => turma._id === turmaSelecionada);
+      if (turmaSelecionadaInfo) {
+        const idClasse = turmaSelecionadaInfo.idClasse._id;
+
+       console.log("procurando.....",idClasse);
+
+        const fetchDisciplinasPorClasse = async () => {
+          try {
+            console.log('Buscando disciplinas para a classe:', idClasse);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/${idClasse}/disciplinas`);
+            console.log('Disciplinas retornadas:', response.data);
+            setDisciplinasPorClasse(response.data);
+          } catch (error) {
+            console.error('Erro ao buscar disciplinas por classe:', error.response ? error.response.data : error.message);
+          }
+        };
+
+        fetchDisciplinasPorClasse();
+      }
     } else {
       setDisciplinasPorClasse([]);
       setDisciplinaSelecionada('');
     }
-  }, [turmaSelecionada]);
+  }, [turmaSelecionada, turmas]);
 
 
   useEffect(() => {
