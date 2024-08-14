@@ -111,7 +111,7 @@ export const CriarTurma = () => {
           >
             <option value="">Selecione um Professor</option>
             {professores.map((professor) => (
-              <option key={professor.id} value={professor.id}>
+              <option key={professor._id} value={professor._id}>
                 {professor.nome}
               </option>
             ))}
