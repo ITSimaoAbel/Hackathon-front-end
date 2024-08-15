@@ -40,8 +40,9 @@ export const CriarProfessor = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6">Registrar Professor</h1>
+    <div className="max-w-sm mx-auto p-6">
+    <div className="mt-40 p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold mb-6 text-orange">Registrar Professor</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nome */}
         <div>
@@ -53,7 +54,7 @@ export const CriarProfessor = () => {
             value={formData.nome}
             onChange={handleChange}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           />
         </div>
 
@@ -66,7 +67,7 @@ export const CriarProfessor = () => {
             value={formData.sexo}
             onChange={handleChange}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           >
             <option value="">Selecione o Sexo</option>
             <option value="Masculino">Masculino</option>
@@ -85,7 +86,7 @@ export const CriarProfessor = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           />
         </div>
 
@@ -99,18 +100,19 @@ export const CriarProfessor = () => {
             value={formData.senha}
             onChange={handleChange}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           />
         </div>
 
         {/* Botão de Enviar */}
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full py-2 px-4 bg-orange text-white font-semibold rounded-md shadow-sm hover:bg-azul focus:outline-none focus:ring-2 focus:ring-orange"
         >
           Registrar
         </button>
       </form>
+    </div>
     </div>
   );
 };
