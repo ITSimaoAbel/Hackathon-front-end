@@ -7,6 +7,8 @@ export const Home = () => {
       <>
          <Login/>
         <Dashboard />
+        <Footer/>
+        
       </>
     );
 }
