@@ -11,7 +11,6 @@ export const LancamentoNotas = () => {
   const [avaliacoes, setAvaliacoes] = useState([]);
   const [disciplinasPorClasse, setDisciplinasPorClasse] = useState([]);
 
-  
   useEffect(() => {
     const fetchTurmas = async () => {
       try {
@@ -34,7 +33,6 @@ export const LancamentoNotas = () => {
     fetchTurmas();
     fetchAvaliacoes();
   }, []);
-
 
   useEffect(() => {
     if (turmaSelecionada) {
@@ -59,10 +57,9 @@ export const LancamentoNotas = () => {
     }
   }, [turmaSelecionada, turmas]);
 
-  
   useEffect(() => {
     if (turmaSelecionada && avaliacaoSelecionada && disciplinaSelecionada) {
-      console.log("turma selecionada",turmaSelecionada)
+      console.log("turma selecionada", turmaSelecionada);
       const fetchAlunos = async () => {
         try {
           const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos/turma/${turmaSelecionada}`, {
@@ -99,14 +96,23 @@ export const LancamentoNotas = () => {
   const handleNotaChange = (index, e) => {
     const { value } = e.target;
     const novosAlunos = [...alunos];
-    novosAlunos[index].nota = value;
+    const nota = Math.max(0, Math.min(20, parseFloat(value))); // Limitar a nota entre 0 e 20
+    novosAlunos[index].nota = nota;
     setAlunos(novosAlunos);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const dadosNotas = alunos.map(aluno => ({
+      idAluno: aluno._id, 
+      idAvaliacao: avaliacaoSelecionada, 
+      nota: aluno.nota 
+    }));
+
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/notas`, alunos);
+      console.log("...verificando dados..", dadosNotas);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/notas/todas`, dadosNotas);
       console.log('Notas lançadas com sucesso:', response.data);
     } catch (error) {
       console.error('Erro ao lançar notas:', error.response ? error.response.data : error.message);
@@ -186,7 +192,7 @@ export const LancamentoNotas = () => {
                 value={aluno.nota || ''}
                 onChange={(e) => handleNotaChange(index, e)}
                 min="0"
-                max="10"
+                max="20"
                 step="0.1"
                 required
                 className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
