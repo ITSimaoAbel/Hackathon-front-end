@@ -7,7 +7,6 @@ export const FormularioClasseDisciplinas = () => {
   const [selectedDisciplinas, setSelectedDisciplinas] = useState([]);
   const [allDisciplinas, setAllDisciplinas] = useState([]);
 
- 
   useEffect(() => {
     const fetchDisciplinas = async () => {
       try {
@@ -21,7 +20,6 @@ export const FormularioClasseDisciplinas = () => {
     fetchDisciplinas();
   }, []);
 
- 
   const handleDisciplinasChange = (e) => {
     const { value, checked } = e.target;
     setSelectedDisciplinas((prevSelected) =>
@@ -29,21 +27,26 @@ export const FormularioClasseDisciplinas = () => {
     );
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (!classeNome) {
+      window.alert('O nome da classe é obrigatório.');
+      return;
+    }
+
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/classes`, {
         nome: classeNome,
         disciplinas: selectedDisciplinas
       });
       console.log('Classe criada com sucesso:', response.data);
-    
+      window.alert('Classe criada com sucesso!'); // Adiciona alerta de sucesso
       setClasseNome('');
       setSelectedDisciplinas([]);
     } catch (error) {
       console.error('Erro ao criar classe:', error);
+      window.alert('Erro ao criar classe. Tente novamente.'); // Adiciona alerta de erro
     }
   };
 
@@ -74,7 +77,7 @@ export const FormularioClasseDisciplinas = () => {
                   value={disciplina._id}
                   checked={selectedDisciplinas.includes(disciplina._id)}
                   onChange={handleDisciplinasChange}
-                  className="mr-2 "
+                  className="mr-2"
                 />
                 <label htmlFor={`disciplina-${disciplina._id}`} className="text-sm text-gray-700">
                   {disciplina.nome}
