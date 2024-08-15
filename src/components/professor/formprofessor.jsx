@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importe o useNavigate
 
 export const CriarProfessor = () => {
   const [formData, setFormData] = useState({
@@ -9,27 +10,30 @@ export const CriarProfessor = () => {
     senha: '',
   });
 
- 
+  const navigate = useNavigate(); // Inicialize o hook useNavigate
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-  
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/professores`, formData);
       console.log('Professor registrado com sucesso:', response.data);
-   
+      
+     
       setFormData({
         nome: '',
         sexo: '',
         email: '',
         senha: '',
       });
+
+    
+      navigate(`/login-page`); 
     } catch (error) {
       console.error('Erro ao registrar professor:', error.response ? error.response.data : error.message);
     }

@@ -7,30 +7,25 @@ export const TabelaAluno = () => {
   const [turmas, setTurmas] = useState([]);
   const [selectedTurma, setSelectedTurma] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [totalAlunos, setTotalAlunos] = useState(0); // Adicionando estado para total de alunos
+  const [totalAlunos, setTotalAlunos] = useState(0);
+  const [error, setError] = useState('');
 
-  const getAuthToken = () => {
-    return localStorage.getItem('token');
-  };
+  const getAuthToken = () => localStorage.getItem('token');
 
   useEffect(() => {
     const fetchTurmas = async () => {
       try {
         const token = getAuthToken();
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turma-por-professor`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+          headers: { 'Authorization': `Bearer ${token}` }
         });
-        console.log('Dados recebidos:', response.data);
         if (Array.isArray(response.data)) {
           setTurmas(response.data);
         } else {
-          console.error('Resposta da API não é um array:', response.data);
-          setTurmas([]); // Definir como array vazio em caso de resposta inesperada
+          setError('Resposta da API não é um array.');
         }
       } catch (error) {
-        console.error('Erro ao buscar turmas:', error);
+        setError('Erro ao buscar turmas.');
       }
     };
 
@@ -43,27 +38,20 @@ export const TabelaAluno = () => {
         try {
           const token = getAuthToken();
           const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
+            headers: { 'Authorization': `Bearer ${token}` },
             params: { idTurma: selectedTurma }
           });
-          console.log('Dados recebidos Alunos:', response.data);
-          // Ajustar conforme o formato da resposta
-          if (response.data.totalAlunos !== undefined) {
-            setTotalAlunos(response.data.totalAlunos);
-            setAlunos([]); // Se for apenas a quantidade total, definir alunos como array vazio
-          } else if (Array.isArray(response.data)) {
-            setAlunos(response.data);
-            setTotalAlunos(response.data.length);
+          if (Array.isArray(response.data.alunos)) {
+            setAlunos(response.data.alunos);
+            setTotalAlunos(response.data.totalAlunos || response.data.alunos.length);
           } else {
-            console.error('Resposta da API não é um array ou objeto esperado:', response.data);
+            setError('Resposta da API não é um array de alunos.');
             setAlunos([]);
             setTotalAlunos(0);
           }
         } catch (error) {
-          console.error('Erro ao buscar alunos:', error);
-          setAlunos([]); // Garantir que o estado seja um array em caso de erro
+          setError('Erro ao buscar alunos.');
+          setAlunos([]);
           setTotalAlunos(0);
         }
       }
@@ -73,19 +61,15 @@ export const TabelaAluno = () => {
   }, [selectedTurma]);
 
   const handleDelete = (id) => {
-    setAlunos((prevAlunos) => prevAlunos.filter((aluno) => aluno.id !== id));
+    setAlunos(prevAlunos => prevAlunos.filter(aluno => aluno._id !== id));
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  const handleOpenModal = () => setIsModalOpen(true);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleAddAluno = (novoAluno) => {
-    setAlunos((prevAlunos) => [...prevAlunos, novoAluno]);
+    setAlunos(prevAlunos => [...prevAlunos, novoAluno]);
     handleCloseModal();
   };
 
@@ -94,16 +78,15 @@ export const TabelaAluno = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">Tabela de Alunos</h1>
         <button
-          className="py-2 px-4 bg-orange text-white rounded-md hover:bg-azul"
+          className="py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition duration-300"
           onClick={handleOpenModal}
         >
           Adicionar Aluno
         </button>
       </div>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="mb-4">
-        <label htmlFor="turma-select" className="block text-sm font-medium text-gray-700">
-          Selecione uma Turma
-        </label>
+        <label htmlFor="turma-select" className="block text-sm font-medium text-gray-700">Selecione uma Turma</label>
         <select
           id="turma-select"
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -111,7 +94,7 @@ export const TabelaAluno = () => {
           onChange={(e) => setSelectedTurma(e.target.value)}
         >
           <option value="">Selecione uma turma</option>
-          {turmas.map((turma) => (
+          {turmas.map(turma => (
             <option key={turma._id} value={turma._id}>
               {turma.numero} - {turma.sala}
             </option>
@@ -119,7 +102,7 @@ export const TabelaAluno = () => {
         </select>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 border border-gray-300 w-3/4 mx-auto">
+        <table className="min-w-full divide-y divide-gray-200 border border-gray-300 mx-auto">
           <thead className="bg-gray-800 text-white">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
@@ -132,22 +115,18 @@ export const TabelaAluno = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {alunos.length > 0 ? (
-              alunos.map((aluno) => (
-                <tr key={aluno.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{aluno.id}</td>
+              alunos.map(aluno => (
+                <tr key={aluno._id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{aluno._id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.nome}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.dataNascimento}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.sexo === 'M' ? 'Masculino' : 'Feminino'}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.idTurma}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      className="text-blue-600 hover:text-blue-900 mr-2"
-                    >
-                      Editar
-                    </button>
+                    <button className="text-blue-600 hover:text-blue-900 mr-2">Editar</button>
                     <button
                       className="text-red-600 hover:text-red-900"
-                      onClick={() => handleDelete(aluno.id)}
+                      onClick={() => handleDelete(aluno._id)}
                     >
                       Excluir
                     </button>
@@ -165,10 +144,9 @@ export const TabelaAluno = () => {
           <p>Total de Alunos: {totalAlunos}</p>
         </div>
       </div>
-      
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md relative">
             <button
               className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
               onClick={handleCloseModal}
