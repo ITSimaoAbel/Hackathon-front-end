@@ -6,4 +6,4 @@ export const App = () => {
       <RouterProvider router={route} /> 
   )
 }
-export default App
+export default App;

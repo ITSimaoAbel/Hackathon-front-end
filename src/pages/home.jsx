@@ -47,30 +47,53 @@ export const optionsPie = {
 
 export const Home = () => {
   const [totalAlunos, setTotalAlunos] = useState(0); 
-  const totalTurmas = 12;   
-  const totalClasses = 8;   
-  const totalDisciplinas = 5; 
+  const [totalTurmas, setTotalTurmas] = useState(0);
+  const [totalClasses, setTotalClasses] = useState(0);
+  const [totalDisciplinas, setTotalDisciplinas] = useState(0);
+  const totalDisciplinasConst = 5; 
 
   useEffect(() => {
-    const fetchTotalAlunos = async () => {
+    const fetchQuantidades = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`);
-
-        console.log('Resposta da API:', response.data.totalAlunos);
+        const [alunosResponse, turmasResponse, classesResponse, disciplinasResponse] = await Promise.all([
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-turmas`),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-classes`),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-disciplinas`)
+        ]);
         
-        if (Array.isArray(response.data)) {
-          const {totalAlunos} = response.data.reduce((acc, turma) => acc + turma.quantidade, 0);
+        if (Array.isArray(alunosResponse.data)) {
+          const totalAlunos = alunosResponse.data.reduce((acc, turma) => acc + turma.quantidade, 0);
           setTotalAlunos(totalAlunos);
         } else {
-          console.error('A resposta da API não é um array:', response.data);
-          setTotalAlunos(response.data.totalAlunos);
+          console.error('A resposta da API de alunos não é um array:', alunosResponse.data);
+          setTotalAlunos(alunosResponse.data.totalAlunos);
         }
+
+        if (turmasResponse.data && typeof turmasResponse.data.quantidadeTurmas === 'number') {
+          setTotalTurmas(turmasResponse.data.quantidadeTurmas);
+        } else {
+          console.error('A resposta da API de turmas não contém a quantidade esperada:', turmasResponse.data);
+        }
+
+        if (classesResponse.data && typeof classesResponse.data.quantidadeTurmas === 'number') {
+          setTotalClasses(classesResponse.data.quantidadeTurmas);
+        } else {
+          console.error('A resposta da API de classes não contém a quantidade esperada:', classesResponse.data);
+        }
+
+        if (disciplinasResponse.data && typeof disciplinasResponse.data.quantidadeDisciplinas === 'number') {
+          setTotalDisciplinas(disciplinasResponse.data.quantidadeDisciplinas);
+        } else {
+          console.error('A resposta da API de disciplinas não contém a quantidade esperada:', disciplinasResponse.data);
+        }
+
       } catch (error) {
-        console.error('Erro ao buscar o total de alunos:', error.response ? error.response.data : error.message);
+        console.error('Erro ao buscar dados:', error.response ? error.response.data : error.message);
       }
     };
 
-    fetchTotalAlunos();
+    fetchQuantidades();
   }, []); 
 
   return (
@@ -99,7 +122,7 @@ export const Home = () => {
           </div>
         </div>
         
-        <div className="ml-80 mt-20 flex justify-center gap-56 items-center mt-8">
+        <div className="ml-80 mt-20 flex justify-center gap-56 items-center ">
           <div className="p-4 bg-white rounded shadow-lg" style={{ width: '400px', height: '400px' }}>
             <h2 className="text-xl font-bold text-orange mb-4 text-center">Dificuldade das Matérias</h2>
             <Chart
