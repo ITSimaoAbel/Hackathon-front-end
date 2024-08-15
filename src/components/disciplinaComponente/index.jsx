@@ -26,8 +26,8 @@ export const FormularioDisciplina = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6">Criar Nova Disciplina</h1>
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-2xl">
+      <h1 className="text-2xl text-orange font-bold mb-6">Criar Nova Disciplina</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome da Disciplina</label>
@@ -37,7 +37,7 @@ export const FormularioDisciplina = () => {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           />
         </div>
 
@@ -45,7 +45,7 @@ export const FormularioDisciplina = () => {
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full py-2 px-4 bg-orange text-white font-semibold rounded-md shadow-sm hover:bg-azul focus:outline-none focus:ring-2 focus:ring-orange"
         >
           Criar Disciplina
         </button>

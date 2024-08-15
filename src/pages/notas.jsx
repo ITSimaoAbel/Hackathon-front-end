@@ -7,11 +7,11 @@ export const Notas = () => {
       <>
         <div className="flex flex-col min-h-screen">
           <Dashboard />      
-          <main className="flex-1">
+          <main className="flex-1 p-20 ml-80 m-20 ">
             <LancamentoNotas />       
           </main>
-          <Footer />
-        </div> 
+            <Footer />
+          </div>
       </>
     );
 }

@@ -96,7 +96,7 @@ export const LancamentoNotas = () => {
   const handleNotaChange = (index, e) => {
     const { value } = e.target;
     const novosAlunos = [...alunos];
-    const nota = Math.max(0, Math.min(20, parseFloat(value))); // Limitar a nota entre 0 e 20
+    const nota = Math.max(0, Math.min(20, parseFloat(value))); 
     novosAlunos[index].nota = nota;
     setAlunos(novosAlunos);
   };
@@ -120,8 +120,8 @@ export const LancamentoNotas = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-blue-400 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6">Lançamento de Notas</h1>
+    <div className=" max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-2xl">
+      <h1 className="text-2xl font-bold text-orange mb-6">Lançamento de Notas</h1>
       <div className="space-y-4 mb-6">
         <div>
           <label htmlFor="turma" className="block text-sm font-medium text-gray-700">Escolha a Turma</label>
@@ -129,7 +129,7 @@ export const LancamentoNotas = () => {
             id="turma"
             value={turmaSelecionada}
             onChange={handleTurmaChange}
-            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           >
             <option value="">Selecione a Turma</option>
             {turmas.map((turma) => (
@@ -146,7 +146,7 @@ export const LancamentoNotas = () => {
             id="disciplina"
             value={disciplinaSelecionada}
             onChange={handleDisciplinaChange}
-            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           >
             <option value="">Selecione a Disciplina</option>
             {disciplinasPorClasse.map((disciplina) => (
@@ -163,7 +163,7 @@ export const LancamentoNotas = () => {
             id="avaliacao"
             value={avaliacaoSelecionada}
             onChange={handleAvaliacaoChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
           >
             <option value="">Selecione a Avaliação</option>
             {avaliacoes.map((avaliacao) => (
@@ -195,7 +195,7 @@ export const LancamentoNotas = () => {
                 max="20"
                 step="0.1"
                 required
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange"
               />
               <button
                 type="button"
@@ -209,7 +209,7 @@ export const LancamentoNotas = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 bg-orange text-white font-semibold rounded-md shadow-sm hover:bg-azul focus:outline-none focus:ring-2 focus:ring-orange"
           >
             Lançar Notas
           </button>
