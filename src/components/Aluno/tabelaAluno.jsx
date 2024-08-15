@@ -19,6 +19,8 @@ export const TabelaAluno = () => {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turma-por-professor`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
+
+        console.log("prof....",response.data);
         if (Array.isArray(response.data)) {
           setTurmas(response.data);
         } else {
@@ -37,19 +39,23 @@ export const TabelaAluno = () => {
       if (selectedTurma) {
         try {
           const token = getAuthToken();
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`, {
+          console.log("jklshdfuhef",selectedTurma);
+          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos/turma/${selectedTurma}`, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { idTurma: selectedTurma }
           });
-          if (Array.isArray(response.data.alunos)) {
-            setAlunos(response.data.alunos);
-            setTotalAlunos(response.data.totalAlunos || response.data.alunos.length);
+
+          if (Array.isArray(response.data)) {
+            console.log(response.data)
+            setAlunos(response.data);
+            setTotalAlunos(response.data.length);
           } else {
-            setError('Resposta da API não é um array de alunos.');
+            setError('Resposta da API não é um array de alunos.',response.data);
             setAlunos([]);
             setTotalAlunos(0);
           }
         } catch (error) {
+          console.log(error)
           setError('Erro ao buscar alunos.');
           setAlunos([]);
           setTotalAlunos(0);
@@ -78,7 +84,7 @@ export const TabelaAluno = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">Tabela de Alunos</h1>
         <button
-          className="py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition duration-300"
+          className="py-2 px-4 bg-orange text-white rounded-md hover:bg-orange transition duration-300"
           onClick={handleOpenModal}
         >
           Adicionar Aluno
@@ -115,8 +121,10 @@ export const TabelaAluno = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {alunos.length > 0 ? (
+            
               alunos.map(aluno => (
                 <tr key={aluno._id}>
+                  {console.log(alunos[0])}
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{aluno._id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.nome}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{aluno.dataNascimento}</td>
