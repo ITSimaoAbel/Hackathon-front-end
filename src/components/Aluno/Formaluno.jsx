@@ -11,10 +11,12 @@ export const Aluno = () => {
 
   const [turmas, setTurmas] = useState([]);
 
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ export const Aluno = () => {
       console.error('Erro ao registrar aluno:', error.response ? error.response.data : error.message);
     }
   };
+
 
   useEffect(() => {
     const fetchTurmas = async () => {
@@ -100,7 +103,7 @@ export const Aluno = () => {
             <option value="">Selecione uma Turma</option>
             {turmas.map((turma) => (
               <option key={turma._id} value={turma._id}>
-                {`Turma: ${turma.numero} - Sala: ${turma.sala} - ${turma.idClasse ? turma.idClasse.nome : 'Desconhecida'}ª Classe`}
+               Turma:{turma.numero} - Sala:{turma.sala} -{turma.Classe}ª Classe
               </option>
             ))}
           </select>
