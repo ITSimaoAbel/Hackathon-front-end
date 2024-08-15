@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 import { Dashboard } from '../components/dashboard/admindash';
+import axios from 'axios';
 
 export const data = [
   ["Matéria", "Nível de Dificuldade"],
@@ -32,7 +33,6 @@ export const optionsBar = {
 
 export const optionsPie = {
   title: "Distribuição do Nível de Dificuldade por Matéria",
- 
   slices: {
     0: { offset: 0.05 }, 
     1: { offset: 0.05 },
@@ -46,10 +46,32 @@ export const optionsPie = {
 };
 
 export const Home = () => {
-  const totalAlunos = 150;  
+  const [totalAlunos, setTotalAlunos] = useState(0); 
   const totalTurmas = 12;   
   const totalClasses = 8;   
   const totalDisciplinas = 5; 
+
+  useEffect(() => {
+    const fetchTotalAlunos = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`);
+
+        console.log('Resposta da API:', response.data.totalAlunos);
+        
+        if (Array.isArray(response.data)) {
+          const {totalAlunos} = response.data.reduce((acc, turma) => acc + turma.quantidade, 0);
+          setTotalAlunos(totalAlunos);
+        } else {
+          console.error('A resposta da API não é um array:', response.data);
+          setTotalAlunos(response.data.totalAlunos);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar o total de alunos:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchTotalAlunos();
+  }, []); 
 
   return (
     <>
@@ -100,11 +122,7 @@ export const Home = () => {
             />
           </div>
         </div>
-
-
       </div>
     </>
   );
 };
-
-
