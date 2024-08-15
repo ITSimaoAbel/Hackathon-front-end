@@ -49,15 +49,17 @@ export const Home = () => {
   const [totalAlunos, setTotalAlunos] = useState(0); 
   const [totalTurmas, setTotalTurmas] = useState(0);
   const [totalClasses, setTotalClasses] = useState(0);
-  const totalDisciplinas = 5; 
+  const [totalDisciplinas, setTotalDisciplinas] = useState(0);
+  const totalDisciplinasConst = 5; 
 
   useEffect(() => {
     const fetchQuantidades = async () => {
       try {
-        const [alunosResponse, turmasResponse, classesResponse] = await Promise.all([
+        const [alunosResponse, turmasResponse, classesResponse, disciplinasResponse] = await Promise.all([
           axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`),
           axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-turmas`),
-          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-classes`)
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-classes`),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-disciplinas`)
         ]);
         
         if (Array.isArray(alunosResponse.data)) {
@@ -78,6 +80,12 @@ export const Home = () => {
           setTotalClasses(classesResponse.data.quantidadeTurmas);
         } else {
           console.error('A resposta da API de classes não contém a quantidade esperada:', classesResponse.data);
+        }
+
+        if (disciplinasResponse.data && typeof disciplinasResponse.data.quantidadeDisciplinas === 'number') {
+          setTotalDisciplinas(disciplinasResponse.data.quantidadeDisciplinas);
+        } else {
+          console.error('A resposta da API de disciplinas não contém a quantidade esperada:', disciplinasResponse.data);
         }
 
       } catch (error) {
