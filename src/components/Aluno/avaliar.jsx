@@ -3,17 +3,15 @@ import axios from 'axios';
 
 export const LancamentoNotas = () => {
   const [turmaSelecionada, setTurmaSelecionada] = useState('');
-  const [materiaSelecionada, setMateriaSelecionada] = useState('');
   const [avaliacaoSelecionada, setAvaliacaoSelecionada] = useState('');
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState('');
 
   const [alunos, setAlunos] = useState([]);
   const [turmas, setTurmas] = useState([]);
-  const [materias, setMaterias] = useState([]);
   const [avaliacoes, setAvaliacoes] = useState([]);
-  const [disciplinas, setDisciplinas] = useState([]);
   const [disciplinasPorClasse, setDisciplinasPorClasse] = useState([]);
 
+  
   useEffect(() => {
     const fetchTurmas = async () => {
       try {
@@ -21,15 +19,6 @@ export const LancamentoNotas = () => {
         setTurmas(response.data);
       } catch (error) {
         console.error('Erro ao buscar turmas:', error.response ? error.response.data : error.message);
-      }
-    };
-
-    const fetchMaterias = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/turmas`);
-        setMaterias(response.data);
-      } catch (error) {
-        console.error('Erro ao buscar matérias:', error.response ? error.response.data : error.message);
       }
     };
 
@@ -42,35 +31,20 @@ export const LancamentoNotas = () => {
       }
     };
 
-    const fetchDisciplinas = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/disciplinas`);
-        setDisciplinas(response.data);
-      } catch (error) {
-        console.error('Erro ao buscar disciplinas:', error.response ? error.response.data : error.message);
-      }
-    };
-
     fetchTurmas();
-    fetchMaterias();
     fetchAvaliacoes();
-    fetchDisciplinas();
   }, []);
+
 
   useEffect(() => {
     if (turmaSelecionada) {
-     
       const turmaSelecionadaInfo = turmas.find(turma => turma._id === turmaSelecionada);
       if (turmaSelecionadaInfo) {
         const idClasse = turmaSelecionadaInfo.idClasse._id;
 
-       console.log("procurando.....",idClasse);
-
         const fetchDisciplinasPorClasse = async () => {
           try {
-            console.log('Buscando disciplinas para a classe:', idClasse);
             const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/${idClasse}/disciplinas`);
-            console.log('Disciplinas retornadas:', response.data);
             setDisciplinasPorClasse(response.data);
           } catch (error) {
             console.error('Erro ao buscar disciplinas por classe:', error.response ? error.response.data : error.message);
@@ -85,15 +59,15 @@ export const LancamentoNotas = () => {
     }
   }, [turmaSelecionada, turmas]);
 
-
+  
   useEffect(() => {
-    if (turmaSelecionada && materiaSelecionada && avaliacaoSelecionada && disciplinaSelecionada) {
+    if (turmaSelecionada && avaliacaoSelecionada && disciplinaSelecionada) {
+      console.log("turma selecionada",turmaSelecionada)
       const fetchAlunos = async () => {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos`, {
+          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos/turma/${turmaSelecionada}`, {
             params: {
               turma: turmaSelecionada,
-              materia: materiaSelecionada,
               avaliacao: avaliacaoSelecionada,
               disciplina: disciplinaSelecionada,
             },
@@ -108,14 +82,10 @@ export const LancamentoNotas = () => {
     } else {
       setAlunos([]);
     }
-  }, [turmaSelecionada, materiaSelecionada, avaliacaoSelecionada, disciplinaSelecionada]);
+  }, [turmaSelecionada, avaliacaoSelecionada, disciplinaSelecionada]);
 
   const handleTurmaChange = (e) => {
     setTurmaSelecionada(e.target.value);
-  };
-
-  const handleMateriaChange = (e) => {
-    setMateriaSelecionada(e.target.value);
   };
 
   const handleAvaliacaoChange = (e) => {
@@ -159,23 +129,6 @@ export const LancamentoNotas = () => {
             {turmas.map((turma) => (
               <option key={turma._id} value={turma._id}>
                 {`Turma: ${turma.numero} - Sala: ${turma.sala} - ${turma.idClasse ? turma.idClasse.nome : 'Desconhecida'}ª Classe`}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="materia" className="block text-sm font-medium text-gray-700">Escolha a Matéria</label>
-          <select
-            id="materia"
-            value={materiaSelecionada}
-            onChange={handleMateriaChange}
-            className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="">Selecione a Matéria</option>
-            {materias.map((materia) => (
-              <option key={materia._id} value={materia._id}>
-                {materia.nome}
               </option>
             ))}
           </select>
@@ -230,7 +183,7 @@ export const LancamentoNotas = () => {
               <input
                 type="number"
                 name="nota"
-                value={aluno.nota}
+                value={aluno.nota || ''}
                 onChange={(e) => handleNotaChange(index, e)}
                 min="0"
                 max="10"
