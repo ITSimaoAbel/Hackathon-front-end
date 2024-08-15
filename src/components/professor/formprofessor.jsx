@@ -9,21 +9,21 @@ export const CriarProfessor = () => {
     senha: '',
   });
 
-  // Função para atualizar os dados do formulário
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Função para enviar o formulário
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Exemplo de URL da API, ajuste conforme necessário
+  
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/professores`, formData);
       console.log('Professor registrado com sucesso:', response.data);
-      // Limpar os campos do formulário
+   
       setFormData({
         nome: '',
         sexo: '',
