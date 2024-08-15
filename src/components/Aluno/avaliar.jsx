@@ -114,13 +114,15 @@ export const LancamentoNotas = () => {
       console.log("...verificando dados..", dadosNotas);
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/notas/todas`, dadosNotas);
       console.log('Notas lançadas com sucesso:', response.data);
+      window.alert('Notas registradas com sucesso!'); // Adiciona o alerta de sucesso
     } catch (error) {
       console.error('Erro ao lançar notas:', error.response ? error.response.data : error.message);
+      window.alert('Erro ao registrar as notas.'); // Adiciona o alerta de erro
     }
   };
 
   return (
-    <div className=" max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-2xl">
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-2xl">
       <h1 className="text-2xl font-bold text-orange mb-6">Lançamento de Notas</h1>
       <div className="space-y-4 mb-6">
         <div>
