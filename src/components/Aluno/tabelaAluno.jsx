@@ -49,10 +49,10 @@ export const TabelaAluno = () => {
             params: { idTurma: selectedTurma }
           });
           console.log('Dados recebidos Alunos:', response.data);
-          // Ajustar conforme o formato da resposta
+          
           if (response.data.totalAlunos !== undefined) {
             setTotalAlunos(response.data.totalAlunos);
-            setAlunos([]); // Se for apenas a quantidade total, definir alunos como array vazio
+            setAlunos([]); 
           } else if (Array.isArray(response.data)) {
             setAlunos(response.data);
             setTotalAlunos(response.data.length);
@@ -63,7 +63,7 @@ export const TabelaAluno = () => {
           }
         } catch (error) {
           console.error('Erro ao buscar alunos:', error);
-          setAlunos([]); // Garantir que o estado seja um array em caso de erro
+          setAlunos([]);
           setTotalAlunos(0);
         }
       }
