@@ -55,11 +55,17 @@ export const Home = () => {
   useEffect(() => {
     const fetchQuantidades = async () => {
       try {
+        const token = localStorage.getItem('token'); // Obtém o token do armazenamento local
+
+        const headers = {
+          Authorization: `Bearer ${token}` // Adiciona o token ao cabeçalho da requisição
+        };
+
         const [alunosResponse, turmasResponse, classesResponse, disciplinasResponse] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`),
-          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-turmas`),
-          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-classes`),
-          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-disciplinas`)
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/alunos-por-turma`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-turmas`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-classes`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/quantidade-disciplinas`, { headers })
         ]);
         
         if (Array.isArray(alunosResponse.data)) {
@@ -76,8 +82,8 @@ export const Home = () => {
           console.error('A resposta da API de turmas não contém a quantidade esperada:', turmasResponse.data);
         }
 
-        if (classesResponse.data && typeof classesResponse.data.quantidadeTurmas === 'number') {
-          setTotalClasses(classesResponse.data.quantidadeTurmas);
+        if (classesResponse.data && typeof classesResponse.data.quantidadeClasses === 'number') {
+          setTotalClasses(classesResponse.data.quantidadeClasses);
         } else {
           console.error('A resposta da API de classes não contém a quantidade esperada:', classesResponse.data);
         }
