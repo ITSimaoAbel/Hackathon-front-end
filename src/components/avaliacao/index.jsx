@@ -30,7 +30,7 @@ export const FormAvalicacao = () => {
   };
 
   return (
-    <div className="max-w-4xl mt-24 ml-96 mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-2xl mt-24 ml-96 mx-auto p-6 bg-white rounded-lg shadow-2xl">
       <h1 className="text-2xl font-bold mb-6">Formulário de Avaliação</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -80,5 +80,6 @@ export const FormAvalicacao = () => {
         </button>
       </form>
     </div>
+
   );
 };
